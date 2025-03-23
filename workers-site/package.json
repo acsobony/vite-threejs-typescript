@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "vite-threejs-typescript-worker",
+  "version": "1.0.0",
+  "description": "Cloudflare worker for serving a Three.js application built with TypeScript and Vite",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.3.0"
+  }
+} 
