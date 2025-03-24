@@ -4,7 +4,7 @@ This is a starter project using Three.js, TypeScript, and Vite, providing a mode
 
 ## Features
 
-- ⚡️ **Vite** - Super fast, next-generation frontend tooling
+- ⚡️ **Vite** - Super fast, next-generation frontend tooling 
 - 🔥 **Three.js** - JavaScript 3D library to create and display animated 3D graphics
 - 📝 **TypeScript** - Type safety for your 3D applications
 - 🚀 **Hot Module Replacement** - See changes instantly
