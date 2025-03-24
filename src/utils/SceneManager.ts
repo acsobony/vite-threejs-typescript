@@ -7,8 +7,11 @@ export class SceneManager {
   private renderer: THREE.WebGLRenderer;
   private controls: OrbitControls;
   private cube: THREE.Mesh;
+  private sphere: THREE.Mesh;
   private clock: THREE.Clock;
   private frameId: number | null = null;
+  private lastColorChangeTime: number = 0;
+  private colorChangeInterval: number = 1; // Color change interval in seconds
 
   constructor(container: HTMLElement) {
     // Initialize scene
@@ -51,7 +54,19 @@ export class SceneManager {
       roughness: 0.4,
     });
     this.cube = new THREE.Mesh(geometry, material);
+    this.cube.position.x = -1.5;
     this.scene.add(this.cube);
+
+    // Add sphere
+    const sphereGeometry = new THREE.SphereGeometry(0.8, 32, 32);
+    const sphereMaterial = new THREE.MeshStandardMaterial({
+      color: 0xff0000,
+      metalness: 0.3,
+      roughness: 0.4,
+    });
+    this.sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    this.sphere.position.x = 1.5;
+    this.scene.add(this.sphere);
 
     // Initialize clock
     this.clock = new THREE.Clock();
@@ -70,16 +85,41 @@ export class SceneManager {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   }
 
+  private getRandomColor(): number {
+    return Math.random() * 0xffffff;
+  }
+
+  private changeObjectColors(): void {
+    // Change cube color
+    if (this.cube.material instanceof THREE.MeshStandardMaterial) {
+      this.cube.material.color.setHex(this.getRandomColor());
+    }
+    
+    // Change sphere color
+    if (this.sphere.material instanceof THREE.MeshStandardMaterial) {
+      this.sphere.material.color.setHex(this.getRandomColor());
+    }
+  }
+
   private animate(): void {
     // Call animate recursively
     this.frameId = requestAnimationFrame(this.animate.bind(this));
 
-    // Get delta time
+    // Get elapsed time
     const elapsedTime = this.clock.getElapsedTime();
+
+    // Check if it's time to change colors (every 1 second)
+    if (elapsedTime - this.lastColorChangeTime >= this.colorChangeInterval) {
+      this.changeObjectColors();
+      this.lastColorChangeTime = elapsedTime;
+    }
 
     // Update cube rotation
     this.cube.rotation.x = elapsedTime * 0.5;
     this.cube.rotation.y = elapsedTime * 0.3;
+
+    // Update sphere rotation
+    this.sphere.rotation.y = elapsedTime * 0.5;
 
     // Update controls
     this.controls.update();
@@ -113,6 +153,15 @@ export class SceneManager {
     } else {
       // Handle array of materials
       this.cube.material.forEach((material) => material.dispose());
+    }
+    
+    // Dispose sphere geometry and material
+    this.sphere.geometry.dispose();
+    if (this.sphere.material instanceof THREE.Material) {
+      this.sphere.material.dispose();
+    } else {
+      // Handle array of materials
+      this.sphere.material.forEach((material) => material.dispose());
     }
   }
 }
