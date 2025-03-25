@@ -1,0 +1,19 @@
+name = "vite-threejs-typescript"
+main = "workers-site/index.js"
+compatibility_date = "2024-03-23"
+
+account_id = "f0bea706afe1e6349bf59d783cd37929" # Replace with your actual account ID (not email)
+workers_dev = true
+
+[site]
+bucket = "./dist"
+
+[env.staging]
+name = "vite-threejs-typescript-staging"
+# Add additional configurations for staging if needed
+
+[env.production]
+name = "vite-threejs-typescript-prod"
+# Add route/zone_id for production if you're using a custom domain
+# route = "your-domain.com/*"
+# zone_id = "your-zone-id" 
