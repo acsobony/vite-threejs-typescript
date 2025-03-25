@@ -20,7 +20,7 @@ function initScene(container: HTMLElement): void {
   infoPanel.className = 'info';
   infoPanel.innerHTML = `
     <h1>Three.js + TypeScript</h1>
-    <p>Rotating cube with orbit controls</p>
+    <p>Rotating 3D person figure</p>
     <p>Click and drag to rotate the camera</p>
     <p>Scroll to zoom in/out</p>
   `;
