@@ -18,6 +18,7 @@ The current demo features a rotating 3D cube with the following features:
 - Orbit controls for interactive viewing
 - Responsive design
 - Performance optimizations
+- Added 3D model
 
 ## Getting Started
 
