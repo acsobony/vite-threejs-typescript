@@ -8,7 +8,8 @@ export class SceneManager {
   private controls: OrbitControls;
   private clock: THREE.Clock;
   private frameId: number | null = null;
-  private person: THREE.Group;
+  private person1: THREE.Group;
+  private person2: THREE.Group;
 
   constructor(container: HTMLElement) {
     // Initialize scene
@@ -45,9 +46,15 @@ export class SceneManager {
     directionalLight.position.set(2, 2, 2);
     this.scene.add(directionalLight);
 
-    // Create person
-    this.person = this.createPerson();
-    this.scene.add(this.person);
+    // Create and add first person (blue)
+    this.person1 = this.createPerson(0x3498db);
+    this.person1.position.set(-2, 0, 0);
+    this.scene.add(this.person1);
+
+    // Create and add second person (red)
+    this.person2 = this.createPerson(0xe74c3c);
+    this.person2.position.set(2, 0, 0);
+    this.scene.add(this.person2);
 
     // Initialize clock
     this.clock = new THREE.Clock();
@@ -56,12 +63,12 @@ export class SceneManager {
     window.addEventListener('resize', this.handleResize.bind(this));
   }
 
-  private createPerson(): THREE.Group {
+  private createPerson(color: number = 0x3498db): THREE.Group {
     const person = new THREE.Group();
 
     // Material for the person
     const material = new THREE.MeshStandardMaterial({
-      color: 0x3498db,
+      color: color,
       metalness: 0.2,
       roughness: 0.8,
     });
@@ -133,8 +140,11 @@ export class SceneManager {
     // Get elapsed time
     const elapsedTime = this.clock.getElapsedTime();
 
-    // Rotate person
-    this.person.rotation.y = elapsedTime * 0.5;
+    // Animate the first person (rotate clockwise)
+    this.person1.rotation.y = elapsedTime * 0.5;
+    
+    // Animate the second person (rotate counter-clockwise)
+    this.person2.rotation.y = -elapsedTime * 0.5;
 
     // Update controls
     this.controls.update();
